@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAMANYA - Customer Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#fff8ef,#f7ecd7);
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .login-container{
+            width:400px;
+            background:white;
+            padding:40px;
+            border-radius:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.1);
+            text-align:center;
+        }
+
+        .logo{
+            font-size:40px;
+            color:#c39b34;
+            margin-bottom:10px;
+        }
+
+        h1{
+            color:#c39b34;
+            margin-bottom:5px;
+        }
+
+        .subtitle{
+            color:#777;
+            margin-bottom:25px;
+        }
+
+        .form-group{
+            text-align:left;
+            margin-bottom:15px;
+        }
+
+        .form-group label{
+            display:block;
+            margin-bottom:5px;
+            font-weight:500;
+        }
+
+        .form-group input{
+            width:100%;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            outline:none;
+        }
+
+        .form-group input:focus{
+            border-color:#c39b34;
+        }
+
+        .forgot-password{
+            text-align:right;
+            margin-bottom:20px;
+        }
+
+        .forgot-password a{
+            color:#c39b34;
+            text-decoration:none;
+            font-size:14px;
+        }
+
+        .login-btn{
+            width:100%;
+            background:#c39b34;
+            color:white;
+            border:none;
+            padding:14px;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:600;
+        }
+
+        .login-btn:hover{
+            background:#a98329;
+        }
+
+        .register{
+            margin-top:20px;
+            font-size:14px;
+        }
+
+        .register a{
+            color:#c39b34;
+            text-decoration:none;
+            font-weight:600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+
+    <div class="logo">💎</div>
+
+    <h1>VAMANYA</h1>
+
+    <p class="subtitle">
+        Customer Login
+    </p>
+
+    <form id="customerLoginForm" action="customer_login.php" method="POST">
+
+        <div class="form-group">
+            <label>Email Address</label>
+
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter your email"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+                required>
+        </div>
+
+        <div class="form-group">
+    <label>Mobile Number</label>
+    <input
+        type="tel"
+        name="mobile"
+        placeholder="Enter your mobile number">
+</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <label>
+        <input type="checkbox" name="remember">
+        Remember Me
+    </label>
+
+    <a href="forgot_password.php" style="color:#c39b34; text-decoration:none;">
+        Forgot Password?
+    </a>
+</div>
+        
+        <button type="submit" class="login-btn">
+            LOGIN
+        </button>
+
+    </form>
+
+    <div class="register">
+        New Registration
+        <a href="customer_signup.html">
+            Sign Up
+        </a>
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById("customerLoginForm")
+.addEventListener("submit", function(e){
+
+    const email =
+    document.getElementById("email").value.trim();
+
+    const password =
+    document.getElementById("password").value.trim();
+
+    if(email === "" || password === ""){
+        e.preventDefault();
+        alert("Please fill all fields");
+    }
+
+});
+
+</script>
+
+</body>
+</html>

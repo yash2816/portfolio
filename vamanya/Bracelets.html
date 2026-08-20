@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vamanya Jewellery - Bracelets Collection</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f8f5ef;
+}
+
+.navbar{
+    background:#c39b34;
+    padding:15px 30px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.navbar h1{
+    font-size:30px;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    font-weight:500;
+}
+
+.collection h2{
+    text-align:center;
+    margin:30px 0;
+    color:#5a3400;
+    font-size:28px;
+}
+
+.products-container{
+    width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:20px;
+    padding-bottom:40px;
+}
+.product-card{
+    background:white;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    width:350px;
+    padding:20px;
+}
+
+.product-card img{
+    width:100%;
+    height:250px;
+    object-fit:contain;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-name{
+    font-size:18px;
+    font-weight:600;
+    color:#5a3400;
+}
+
+.category{
+    margin-top:8px;
+    color:#777;
+}
+
+.product-price{
+    margin-top:8px;
+    font-size:20px;
+    color:#c39b34;
+    font-weight:bold;
+}
+
+.view-btn,
+.add-cart-btn{
+    width:100%;
+    margin-top:10px;
+    padding:10px;
+    border:none;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+
+.view-btn{
+    background:#5a3400;
+}
+
+.add-cart-btn{
+    background:#c39b34;
+}
+.category-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+}
+
+.category-buttons button{
+    padding:10px 25px;
+    border:none;
+    border-radius:25px;
+    background:#d4af37;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.category-buttons button:hover{
+    background:#b8860b;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <h1>VAMANYA</h1>
+
+    <div>
+        <a href="customer_dashboard.html">Dashboard</a>
+        <a href="#">Cart</a>
+        <a href="#">My Orders</a>
+    </div>
+</div>
+
+<section class="collection">
+
+    <h2>Our Necklaces Collection</h2>
+
+    <div class="category-buttons">
+        <a href="products.php"><button>All</button></a>
+        <a href="Rings.html"><button>Rings</button></a>
+        <a href="Necklaces.html"><button>Necklace</button></a>
+        <a href="Earrings.html"><button>Earrings</button></a>
+        <a href="Chains.html"><button>Chain</button></a>
+        <a href="Bracelets.html"><button>Bracelet</button></a>
+        <a href="Toe Rings.html"><button>Toe Ring</button></a>
+        <a href="Anklet.html"><button>Anklet</button></a>
+    </div>
+    
+    <div class="products-container">
+
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Tennis Diamond Bracelet.jpg" alt="Tennis Diamond Bracelet">
+            <div class="product-info">
+                <div class="product-name">Tennis Diamond Bracelet</div>
+                <div class="product-price">₹5,000</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Natural Stone Bracelet.jpg" alt="Natural Stone Bracelet">
+            <div class="product-info">
+                <div class="product-name">Natural Stone Bracelet</div>
+                <div class="product-price">₹9,000</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Minimalist Rose Gold Cuff.jpg" alt="Minimalist Rose Gold Cuff">
+            <div class="product-info">
+                <div class="product-name">Minimalist Rose Gold Cuff</div>
+                <div class="product-price">₹6,000</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Silver bracelet.jpg" alt="Silver Bracelet">
+            <div class="product-info">
+                <div class="product-name">Silver Bracelet</div>
+                <div class="product-price">₹3,000</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Black & White Charm Bracelet.jpg" alt="Black & White Charm Bracelet">
+            <div class="product-info">
+                <div class="product-name">Black & White Charm Bracelet</div>
+                <div class="product-price">₹500</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Black Obsidian Evil Eye Bracelet.jpg" alt="Black Obsidian Evil Eye Bracelet">
+            <div class="product-info">
+                <div class="product-name">Black Obsidian Evil Eye Bracelet</div>
+                <div class="product-price">₹1,000</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Black Stone Bracelet.jpg" alt="Black Stone Bracelet">
+            <div class="product-info">
+               <div class="product-name">Black Stone Bracelet</div>
+                <div class="product-price">₹2,000</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 8 -->
+        <div class="product-card">
+            <img src="images/Bracelets/Gold Om Bracelet.jpg" alt="Gold Om Bracelet">
+            <div class="product-info">
+                <div class="product-name">Gold Om Bracelet</div>
+                <div class="product-price">₹4,000</div>
+                <button class="view-btn">View Details</button>
+                <button class="add-cart-btn">Add To Cart</button>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Vamanya Jewellery. All Rights Reserved.
+</footer>
+
+</body>
+</html>

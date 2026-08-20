@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile | Milestone Society</title>
+
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* --- PRO VARIABLES (Using your exact colors) --- */
+:root {
+  --primary: #5d4037;
+  --primary-light: #8d6e63;
+  --accent: #6d4c41;
+  --dark: #4e342e;
+  --bg-gradient: linear-gradient(135deg, #efebe9, #ffffff);
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* NAVBAR (Design Unchanged) */
+.navbar {
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 15px 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-menu div {
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+}
+
+.nav-menu div:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* HEADER */
+.profile-header {
+  background: linear-gradient(135deg, var(--accent), var(--primary-light));
+  height: 220px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  text-align: center;
+  color: white;
+  padding-top: 30px;
+  position: relative;
+  animation: slideDown 0.6s ease-out;
+}
+
+.profile-img-container {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 5px solid white;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+  background: #eee;
+}
+
+/* CONTENT */
+.profile-content {
+  margin-top: 75px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in;
+}
+
+.profile-content h2 {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.badge {
+  display: inline-block;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 0.7rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-top: 5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* CARD */
+.card {
+  margin: 30px auto;
+  width: 90%;
+  max-width: 800px;
+  padding: 30px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: var(--shadow);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.card h4 {
+  color: var(--accent);
+  margin: 20px 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+}
+
+.card hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ddd, transparent);
+  margin: 15px 0;
+}
+
+/* DETAIL ROWS */
+.detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  border-radius: 12px;
+  transition: var(--transition);
+}
+
+.detail:hover {
+  background: rgba(109, 76, 65, 0.05);
+  transform: translateX(5px);
+}
+
+.detail span {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.detail p {
+  font-weight: 600;
+  color: #3e2723;
+}
+
+/* BUTTONS */
+.edit-btn {
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--dark));
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(109, 76, 65, 0.3);
+}
+
+.edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(109, 76, 65, 0.4);
+  filter: brightness(1.1);
+}
+
+/* MODAL STYLES */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn {
+  flex: 2;
+  padding: 12px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 12px;
+  background: #eee;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+@media (max-width: 600px) {
+  .card { margin: 20px 15px; padding: 20px; }
+  .detail { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <h2>🏢 Milestone Society</h2>
+  <div class="nav-menu">
+    <div onclick="go('dashboard.html')">Dashboard</div>
+    <div style="background: rgba(255,255,255,0.2)">My Profile</div>
+    <div onclick="go('My Maintenance.html')">Maintenance</div>
+    <div onclick="go('Complaint.html')">Complaints</div>
+    <div onclick="go('Notice.html')">Notices</div>
+    <div onclick="go('Visitors.html')">Visitors</div>
+    <div onclick="logout()">Logout</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="profile-header">
+  <h2>Resident Profile</h2>
+  <div class="profile-img-container">
+    <img src="images/5.jpg" id="displayPic" class="profile-img" alt="Profile">
+  </div>
+</div>
+
+<div class="profile-content">
+  <h2 id="nameDisplay">Loading...</h2>
+  <div class="badge">✓ Verified Resident</div>
+  <p id="flatDisplay" style="color: #666; margin-top: 5px;"></p>
+</div>
+
+<!-- MAIN CARD -->
+<div class="card">
+  <h4>👤 Personal Information</h4>
+  <div class="detail"><span>First Name</span><p id="firstName"></p></div>
+  <div class="detail"><span>Last Name</span><p id="lastName"></p></div>
+  <div class="detail"><span>Email Address</span><p id="email"></p></div>
+  <div class="detail"><span>Phone Number</span><p id="phone"></p></div>
+
+  <hr>
+
+  <h4>🏢 Residence Details</h4>
+  <div class="detail"><span>Wing / Block</span><p id="wing"></p></div>
+  <div class="detail"><span>Flat Number</span><p id="flatNo"></p></div>
+  <div class="detail"><span>Family Members</span><p id="members"></p></div>
+
+  <hr>
+
+  <h4>🚗 Vehicle Information</h4>
+  <div class="detail"><span>Four Wheeler</span><p id="car"></p></div>
+  <div class="detail"><span>Two Wheeler</span><p id="vehicle2"></p></div>
+  <div class="detail"><span>Two Wheeler</span><p id="vehicle3"></p></div>
+  <div class="detail"><span>Two Wheeler</span><p id="vehicle4"></p></div>
+
+  <button class="edit-btn" onclick="openModal()">Edit Profile Details</button>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h3 style="color: var(--primary); margin-bottom: 20px;">Update Profile</h3>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="editName">
+    </div>
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" id="editFirstName">
+    </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" id="editLastName">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="editEmail">
+    </div>
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="text" id="editPhone">
+    </div>
+    <div class="form-group">
+      <label>Wing</label>
+      <input type="text" id="editWing">
+    </div>
+    <div class="form-group">
+      <label>Flat No</label>
+      <input type="text" id="editFlat">
+    </div>
+    <div class="form-group">
+      <label>Vehicle (Car)</label>
+      <input type="text" id="editCar">
+    </div>
+    <div class="form-group">
+      <label>Vehicle 2</label>
+      <input type="text" id="editVehicle2">
+    </div>
+    <div class="form-group">
+      <label>Vehicle 3</label>
+      <input type="text" id="editVehicle3">
+    </div>
+
+    <div class="form-group">
+      <label>Vehicle 4</label>
+      <input type="text" id="editVehicle4">
+    </div>
+    
+    <div class="modal-actions">
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="save-btn" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Initial Data
+let profile = JSON.parse(localStorage.getItem("milestone_profile")) || {
+  firstName: "YashKumar",
+  lastName: "Patel",
+  email: "yashpatel859635@gmail.com",
+  phone: "+91 9427836272",
+  wing: "A",
+  flat: "203",
+  members: "3",
+  car: "GJ05 RU 0566",
+  vehicle2: "GJ06 YT 2813",
+  vehicle3: "GJ05 SC 8014",
+  vehicle4: "GJ21 AF 6729"
+};
+
+// UI Elements
+const fields = ['name', 'email', 'phone', 'wing', 'flat', 'members', 'car', 'bike'];
+
+function updateUI() {
+  document.getElementById("nameDisplay").innerText =
+    profile.firstName + " " + profile.lastName;
+
+  document.getElementById("flatDisplay").innerText =
+    "Resident of Wing " + profile.wing + ", Flat " + profile.flat;
+
+  document.getElementById("firstName").innerText = profile.firstName;
+  document.getElementById("lastName").innerText = profile.lastName;
+
+  document.getElementById("email").innerText = profile.email;
+  document.getElementById("phone").innerText = profile.phone;
+
+  document.getElementById("wing").innerText = profile.wing;
+  document.getElementById("flatNo").innerText = profile.flat;
+  document.getElementById("members").innerText = profile.members;
+
+  document.getElementById("car").innerText = profile.car;
+  document.getElementById("vehicle2").innerText = profile.vehicle2;
+  document.getElementById("vehicle3").innerText = profile.vehicle3;
+  document.getElementById("vehicle4").innerText = profile.vehicle4;
+}
+
+// Modal Logic
+function openModal() {
+  document.getElementById("editModal").style.display = "flex";
+
+  editFirstName.value = profile.firstName;
+  editLastName.value = profile.lastName;
+  editEmail.value = profile.email;
+  editPhone.value = profile.phone;
+  editWing.value = profile.wing;
+  editFlat.value = profile.flat;
+  editCar.value = profile.car;
+  editVehicle2.value = profile.vehicle2;
+  editVehicle3.value = profile.vehicle3;
+  editVehicle4.value = profile.vehicle4;
+}
+
+function closeModal() {
+  document.getElementById("editModal").style.display = "none";
+}
+
+function saveProfile() {
+  profile.firstName = editFirstName.value;
+  profile.lastName = editLastName.value;
+  profile.email = editEmail.value;
+  profile.phone = editPhone.value;
+  profile.wing = editWing.value;
+  profile.flat = editFlat.value;
+  profile.car = editCar.value;
+  profile.vehicle3 = editVehicle2.value;
+  profile.vehicle3 = editVehicle3.value;
+  profile.vehicle4 = editVehicle4.value;
+
+  localStorage.setItem("milestone_profile", JSON.stringify(profile));
+
+  updateUI();
+  closeModal();
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  const modal = document.getElementById("editModal");
+  if (event.target == modal) closeModal();
+}
+function go(page){
+  window.location.href = page;
+}
+
+// Initial Load
+updateUI();
+</script>
+
+</body>
+</html>

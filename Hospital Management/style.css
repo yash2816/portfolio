@@ -1,0 +1,352 @@
+:root {
+    --primary: #4361ee;
+    --secondary: #3f37c9;
+    --bg-body: #f8fafe;
+    --bg-card: #ffffff;
+    --text-main: #2b2d42;
+    --text-light: #8d99ae;
+    --success: #4cc9f0;
+    --warning: #f72585;
+    --danger: #ef233c;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+}
+
+/* NAVBAR */
+.navbar {
+    background: var(--bg-card);
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.nav-links li.active a, .nav-links a:hover {
+    color: var(--primary);
+}
+/* --- DROPDOWN CONTAINER --- */
+.dropdown {
+    position: relative; /* Required so the menu is positioned relative to this item */
+}
+
+/* --- THE HIDDEN MENU --- */
+.dropdown-content {
+    display: none;             /* Hidden by default */
+    position: absolute;        /* Floats over other content */
+    top: 100%;                 /* Appears directly below the link */
+    left: 0;
+    background-color: #ffffff;
+    min-width: 180px;          /* Width of the dropdown */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Soft shadow */
+    border-radius: 12px;       /* Rounded corners to match cards */
+    padding: 10px 0;
+    z-index: 1000;             /* Ensures it stays on top of everything */
+    border: 1px solid #f0f0f0;
+    margin-top: 10px;          /* Small gap from the navbar */
+}
+
+/* --- SHOW ON HOVER --- */
+.dropdown:hover .dropdown-content {
+    display: block;            /* Shows the menu when hovering over the parent <li> */
+    animation: slideDown 0.3s ease; /* Adds a smooth entrance effect */
+}
+
+/* --- LINKS INSIDE DROPDOWN --- */
+.dropdown-content a {
+    color: #2b2d42 !important; /* Main text color */
+    padding: 12px 20px;
+    text-decoration: none;
+    display: flex;             /* Align icon and text horizontally */
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+/* --- HOVER STATE FOR LINKS --- */
+.dropdown-content a:hover {
+    background-color: #f1f3f9; /* Light blue background on hover */
+    color: #4361ee !important; /* Change text to primary color */
+    padding-left: 25px;        /* Slight "slide-in" effect on hover */
+}
+
+/* --- THE DROPDOWN ARROW ANIMATION --- */
+.dropdown a i.fa-chevron-down {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.dropdown:hover i.fa-chevron-down {
+    transform: rotate(180deg); /* Arrow flips up when menu is open */
+}
+
+/* --- ENTRANCE ANIMATION --- */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* INVISIBLE BRIDGE (UX improvement) */
+/* This prevents the menu from disappearing if there is a tiny gap between the link and the menu */
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+
+/* SEARCH & PROFILE */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-box {
+    background: #f1f3f9;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.notification {
+    position: relative;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    cursor: pointer;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--danger);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+}
+
+.profile img {
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+}
+
+/* MAIN CONTENT */
+.container {
+    max-width: 1300px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.page-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title h1 { font-size: 1.8rem; }
+.page-title p { color: var(--text-light); }
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* STATS CARDS */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--shadow);
+}
+
+.stat-card .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.icon.blue { background: #e7eefd; color: #2d5cfe; }
+.icon.green { background: #e7f7ef; color: #2ecc71; }
+.icon.orange { background: #fff4e6; color: #f39c12; }
+.icon.red { background: #fee7e7; color: #e74c3c; }
+
+/* CONTENT LAYOUT */
+.content-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.table-card, .mini-card {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* TABLES */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 12px;
+    color: var(--text-light);
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+}
+
+td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #fafafa;
+}
+
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status.completed { background: #e7f7ef; color: #2ecc71; }
+.status.pending { background: #fff4e6; color: #f39c12; }
+.status.cancelled { background: #fee7e7; color: #e74c3c; }
+
+/* ASIDE */
+.schedule {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.schedule li {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eee;
+}
+
+.time { font-weight: 700; color: var(--primary); font-size: 0.85rem; }
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    color: var(--text-main);
+}
+
+.activity-item i { color: var(--success); }
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .content-layout { grid-template-columns: 1fr; }
+    .nav-links { display: none; } /* Add a hamburger menu here later */
+}

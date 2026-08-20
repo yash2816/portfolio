@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notice Details</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #ffffff);
+}
+
+.container {
+  margin: 40px;
+  padding: 30px;
+  border-radius: 20px;
+  background: white;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 10px;
+  background: #3f51b5;
+  color: white;
+  border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2 id="title"></h2>
+  <p id="desc"></p>
+
+  <button class="btn" onclick="back()">Back</button>
+</div>
+
+<script>
+document.getElementById("title").innerText = localStorage.getItem("title");
+document.getElementById("desc").innerText = localStorage.getItem("desc");
+
+function back(){
+  window.history.back();
+}
+</script>
+
+</body>
+</html>

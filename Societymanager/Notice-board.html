@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notice Board - Milestone Society</title>
+
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --primary-light: #eef2ff;
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-dark);
+      padding-top: 75px; /* Space for fixed navbar */
+    }
+
+    /* ================= 1. TOP NAVIGATION BAR ================= */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-icon-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.4rem;
+      background: none;
+      border: none;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+
+    /* ================= 2. MAIN CONTAINER ================= */
+    .dashboard-container {
+      max-width: 1300px;
+      margin: 28px auto;
+      padding: 0 24px;
+    }
+
+    /* Header Section */
+    .welcome-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .welcome-text h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .welcome-text p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-dark);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f1f5f9;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+
+    /* Stat Cards Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .icon-indigo { background-color: #eef2ff; color: #4f46e5; }
+    .icon-emerald { background-color: #ecfdf5; color: #10b981; }
+    .icon-rose { background-color: #ffe4e6; color: #f43f5e; }
+    .icon-amber { background-color: #fffbeb; color: #f59e0b; }
+
+    /* Card & Notice Grid */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box {
+      padding: 8px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      outline: none;
+      font-size: 0.88rem;
+      width: 260px;
+    }
+
+    .search-box:focus {
+      border-color: var(--primary);
+    }
+
+    /* Notice Grid */
+    .notice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .notice-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .notice-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    .notice-card.urgent {
+      border-left-color: var(--danger);
+    }
+
+    .notice-card.maintenance {
+      border-left-color: var(--warning);
+    }
+
+    .notice-card.event {
+      border-left-color: var(--success);
+    }
+
+    .notice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+
+    .notice-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .notice-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .notice-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .notice-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Badges */
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .badge-urgent { background: #fee2e2; color: #b91c1c; }
+    .badge-maintenance { background: #fef3c7; color: #b45309; }
+    .badge-event { background: #d1fae5; color: #047857; }
+    .badge-general { background: #eef2ff; color: #4338ca; }
+
+    /* FAB Button */
+    .fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 900;
+    }
+
+    .fab:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    /* Modern Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+      position: relative;
+      animation: modalFadeIn 0.2s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .close {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .close:hover {
+      color: var(--text-dark);
+    }
+
+    /* Form controls in modal */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .navbar { padding: 0 16px; }
+      .menu-toggle { display: block; }
+      .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0; right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow);
+        display: none;
+      }
+      .nav-menu.show { display: flex; }
+      .search-box { width: 100%; }
+      .notice-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="nav-brand">
+      <i class="fa-solid fa-city"></i>
+      <span>Milestone Society</span>
+    </a>
+
+    <button class="menu-toggle" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <div class="nav-link" onclick="go('dashboard.html')"><i class="fa-solid fa-chart-line"></i> Dashboard</div>
+      <div class="nav-link" onclick="go('Residents.html')"><i class="fa-solid fa-users"></i> Residents</div>
+      <div class="nav-link" onclick="go('Maintenance.html')"><i class="fa-solid fa-receipt"></i> Maintenance</div>
+      <div class="nav-link active"><i class="fa-solid fa-bullhorn"></i> Notice Board</div>
+      <div class="nav-link" onclick="go('Complaint.html')"><i class="fa-solid fa-headset"></i> Complaints</div>
+      <div class="nav-link"><i class="fa-solid fa-shield-halved"></i> Security</div>
+      <div class="nav-link"><i class="fa-solid fa-gear"></i> Settings</div>
+      <div class="nav-link" style="color: var(--danger);" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</div>
+    </div>
+
+    <div class="nav-right">
+      <button class="nav-icon-btn" onclick="alert('No new notifications!')">
+        <i class="fa-regular fa-bell"></i>
+      </button>
+      <div class="user-profile">
+        <div class="avatar">SEC</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-container">
+
+    <!-- Header Section -->
+    <div class="welcome-header">
+      <div class="welcome-text">
+        <h1>📢 Notice Board Manager</h1>
+        <p>Broadcast society announcements, meeting alerts, and updates.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="alert('Exporting notice archives...')">
+          <i class="fa-solid fa-download"></i> Archive
+        </button>
+        <button class="btn btn-primary" onclick="openAddNoticeModal()">
+          <i class="fa-solid fa-plus"></i> Post Notice
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Total Notices</div>
+          <div class="stat-value">15</div>
+        </div>
+        <div class="stat-icon icon-indigo">
+          <i class="fa-solid fa-bullhorn"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Active Notices</div>
+          <div class="stat-value">5</div>
+        </div>
+        <div class="stat-icon icon-emerald">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Urgent Alerts</div>
+          <div class="stat-value">2</div>
+        </div>
+        <div class="stat-icon icon-rose">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Upcoming Events</div>
+          <div class="stat-value">3</div>
+        </div>
+        <div class="stat-icon icon-amber">
+          <i class="fa-solid fa-calendar-days"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notice Cards Container -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <i class="fa-solid fa-clipboard-list" style="color: var(--primary);"></i>
+          Active Announcements
+        </div>
+        <input type="text" id="searchInput" class="search-box" placeholder="Search notice title or topic..." onkeyup="filterNotices()">
+      </div>
+
+      <!-- Notice Cards Grid -->
+      <div class="notice-grid" id="noticeGrid">
+        
+        <!-- Notice 1 -->
+        <div class="notice-card maintenance">
+          <div class="notice-header">
+            <h3 class="notice-title">Water Supply Maintenance</h3>
+            <span class="badge badge-maintenance">Maintenance</span>
+          </div>
+          <div class="notice-body">
+            Water supply will be temporarily turned off from 10:00 AM to 02:00 PM due to routine overhead tank cleaning.
+          </div>
+          <div class="notice-footer">
+            <div class="notice-date"><i class="fa-regular fa-calendar"></i> 15 April 2026</div>
+            <button class="btn btn-secondary btn-sm" onclick="viewNotice('Water Supply Maintenance','Water will be off from 10AM to 2PM due to routine overhead tank cleaning.')">
+              <i class="fa-solid fa-eye"></i> View
+            </button>
+          </div>
+        </div>
+
+        <!-- Notice 2 -->
+        <div class="notice-card event">
+          <div class="notice-header">
+            <h3 class="notice-title">Annual General Meeting</h3>
+            <span class="badge badge-event">Event</span>
+          </div>
+          <div class="notice-body">
+            All flat owners are requested to attend the AGM at the society clubhouse at 6:00 PM to discuss annual budget.
+          </div>
+          <div class="notice-footer">
+            <div class="notice-date"><i class="fa-regular fa-calendar"></i> 20 April 2026</div>
+            <button class="btn btn-secondary btn-sm" onclick="viewNotice('Annual General Meeting','Meeting at clubhouse at 6PM to discuss annual budget and solar project.')">
+              <i class="fa-solid fa-eye"></i> View
+            </button>
+          </div>
+        </div>
+
+        <!-- Notice 3 -->
+        <div class="notice-card urgent">
+          <div class="notice-header">
+            <h3 class="notice-title">Fire Safety Inspection Alert</h3>
+            <span class="badge badge-urgent">Urgent</span>
+          </div>
+          <div class="notice-body">
+            Fire drills and alarm testing will take place on Saturday. Please ensure corridors and staircases are free of obstruction.
+          </div>
+          <div class="notice-footer">
+            <div class="notice-date"><i class="fa-regular fa-calendar"></i> 25 April 2026</div>
+            <button class="btn btn-secondary btn-sm" onclick="viewNotice('Fire Safety Inspection Alert','Fire drills and alarm testing Saturday 11 AM. Keep corridors clear.')">
+              <i class="fa-solid fa-eye"></i> View
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- VIEW NOTICE MODAL -->
+  <div id="viewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Notice Details</h2>
+        <span class="close" onclick="closeModal('viewModal')">&times;</span>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <p id="modalDesc" style="color: var(--text-dark); line-height: 1.6; font-size: 0.95rem;">--</p>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; gap: 10px;">
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="redirectToDetailsPage()">Open Detail Page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE NOTICE MODAL -->
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Post New Notice</h2>
+        <span class="close" onclick="closeModal('addModal')">&times;</span>
+      </div>
+
+      <form onsubmit="submitNotice(event)">
+        <div class="form-group">
+          <label>Notice Title</label>
+          <input type="text" id="newTitle" class="form-control" placeholder="e.g. Elevator Maintenance" required>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select id="newCategory" class="form-control">
+            <option value="General">General</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Event">Event</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Description / Details</label>
+          <textarea id="newDesc" class="form-control" placeholder="Write announcement details here..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+          <i class="fa-solid fa-paper-plane"></i> Publish Notice
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FAB (+) BUTTON -->
+  <button class="fab" title="Post Notice" onclick="openAddNoticeModal()">+</button>
+
+  <script>
+    // Navigation Function
+    function go(page) {
+      window.location.href = page;
+    }
+
+    // Toggle Mobile Navbar
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('show');
+    }
+
+    // Logout
+    function logout() {
+      alert("Logged out successfully!");
+    }
+
+    // View Notice (Saves to localStorage matching original script + opens modal)
+    function viewNotice(title, desc) {
+      localStorage.setItem("title", title);
+      localStorage.setItem("desc", desc);
+
+      document.getElementById("modalTitle").innerText = title;
+      document.getElementById("modalDesc").innerText = desc;
+      
+      document.getElementById("viewModal").style.display = "flex";
+    }
+
+    function redirectToDetailsPage() {
+      window.location.href = "Notice-Detail.html";
+    }
+
+    // Open Add Notice Modal
+    function addNotice() {
+      openAddNoticeModal();
+    }
+
+    function openAddNoticeModal() {
+      document.getElementById("addModal").style.display = "flex";
+    }
+
+    // Close Modals
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+
+    // Submit New Notice
+    function submitNotice(event) {
+      event.preventDefault();
+      const title = document.getElementById("newTitle").value;
+      const category = document.getElementById("newCategory").value;
+      const desc = document.getElementById("newDesc").value;
+
+      let cardClass = "";
+      let badgeClass = "badge-general";
+      if (category === "Urgent") { cardClass = "urgent"; badgeClass = "badge-urgent"; }
+      else if (category === "Maintenance") { cardClass = "maintenance"; badgeClass = "badge-maintenance"; }
+      else if (category === "Event") { cardClass = "event"; badgeClass = "badge-event"; }
+
+      const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+      const newCardHTML = `
+        <div class="notice-card ${cardClass}">
+          <div class="notice-header">
+            <h3 class="notice-title">${title}</h3>
+            <span class="badge ${badgeClass}">${category}</span>
+          </div>
+          <div class="notice-body">${desc}</div>
+          <div class="notice-footer">
+            <div class="notice-date"><i class="fa-regular fa-calendar"></i> ${today}</div>
+            <button class="btn btn-secondary btn-sm" onclick="viewNotice('${title}','${desc}')">
+              <i class="fa-solid fa-eye"></i> View
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("noticeGrid").insertAdjacentHTML('afterbegin', newCardHTML);
+      closeModal('addModal');
+      alert(`Notice "${title}" published successfully!`);
+    }
+
+    // Filter Notices
+    function filterNotices() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const cards = document.querySelectorAll("#noticeGrid .notice-card");
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(input) ? "" : "none";
+      });
+    }
+
+    // Close Modals when clicking backdrop
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+      }
+    };
+  </script>
+
+</body>
+</html>

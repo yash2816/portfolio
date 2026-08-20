@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MediFlow HMS | Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+
+--primary:#2563eb;
+--secondary:#38bdf8;
+--bg:#eef5ff;
+--card:rgba(255,255,255,.85);
+--border:#dbeafe;
+--white:#1e293b;
+--text:#475569;
+
+}
+body{
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:linear-gradient(135deg,#eff6ff,#dbeafe,#bfdbfe);
+
+overflow:hidden;
+
+position:relative;
+
+}    
+/*=====================
+Animated Background
+=====================*/
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+width:700px;
+height:700px;
+
+background:#60a5fa;
+
+filter:blur(180px);
+
+opacity:.25;
+
+top:-250px;
+
+left:-200px;
+
+animation:moveOne 18s infinite alternate;
+
+}
+body::after{
+
+content:"";
+
+position:absolute;
+
+width:650px;
+height:650px;
+
+background:#93c5fd;
+
+filter:blur(180px);
+
+opacity:.30;
+
+bottom:-250px;
+
+right:-200px;
+
+animation:moveTwo 20s infinite alternate;
+
+}
+
+@keyframes moveOne{
+
+100%{
+
+transform:translate(180px,120px);
+
+}
+
+}
+
+@keyframes moveTwo{
+
+100%{
+
+transform:translate(-180px,-120px);
+
+}
+
+}
+
+/*=====================
+Floating Medical Icons
+=====================*/
+
+.icon{
+
+position:absolute;
+
+font-size:28px;
+
+color:rgba(255,255,255,.08);
+
+animation:float 8s infinite ease-in-out;
+
+}
+
+.icon:nth-child(1){
+
+top:12%;
+
+left:12%;
+
+}
+
+.icon:nth-child(2){
+
+top:80%;
+
+left:8%;
+
+animation-delay:2s;
+
+}
+
+.icon:nth-child(3){
+
+top:18%;
+
+right:10%;
+
+animation-delay:3s;
+
+}
+
+.icon:nth-child(4){
+
+bottom:10%;
+
+right:15%;
+
+animation-delay:1s;
+
+}
+
+@keyframes float{
+
+50%{
+
+transform:translateY(-25px);
+
+}
+
+}
+
+/*=====================
+Main Container
+=====================*/
+
+.login-wrapper{
+
+width:1150px;
+
+max-width:95%;
+
+height:680px;
+
+display:grid;
+
+grid-template-columns:45% 55%;
+background:rgba(255,255,255,.92);
+
+backdrop-filter:blur(20px);
+
+border:1px solid #dbeafe;
+
+box-shadow:0 25px 60px rgba(37,99,235,.15);
+border-radius:30px;
+
+overflow:hidden;
+
+}
+
+/*=====================
+Left Panel
+=====================*/
+
+.left-panel{
+
+background:linear-gradient(180deg,#2563eb,#0f172a);
+
+padding:60px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.left-panel::before{
+
+content:"";
+
+position:absolute;
+
+width:350px;
+
+height:350px;
+
+background:rgba(255,255,255,.08);
+
+border-radius:50%;
+
+top:-120px;
+
+right:-120px;
+
+}
+
+.left-panel h1{
+
+font-size:42px;
+
+color:white;
+
+margin-bottom:15px;
+
+}
+
+.left-panel p{
+
+color:#dbeafe;
+
+line-height:1.8;
+
+margin-bottom:40px;
+
+}
+
+.left-panel .hospital-icon{
+
+font-size:90px;
+
+color:white;
+
+margin-bottom:30px;
+
+animation:heartbeat 2s infinite;
+
+}
+
+@keyframes heartbeat{
+
+0%,100%{
+
+transform:scale(1);
+
+}
+
+25%{
+
+transform:scale(1.1);
+
+}
+
+50%{
+
+transform:scale(.95);
+
+}
+
+75%{
+
+transform:scale(1.08);
+
+}
+
+}
+
+/*=====================
+Right Panel
+=====================*/
+
+.right-panel{
+
+padding:60px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+background:white;
+
+}
+
+/*=====================
+Login Card
+=====================*/
+
+.login-card{
+
+width:100%;
+
+max-width:430px;
+
+}
+
+.login-card h2{
+
+font-size:34px;
+
+color:#1e293b;
+
+margin-bottom:10px;
+
+}
+
+.login-card p{
+
+color:#64748b;
+
+margin-bottom:35px;
+
+}
+
+.input-group{
+
+margin-bottom:22px;
+
+}
+
+.input-group label{
+
+display:block;
+
+margin-bottom:8px;
+
+color:#334155;
+
+font-weight:600;
+
+}
+
+.input-box{
+
+position:relative;
+
+}
+
+.input-box i{
+
+position:absolute;
+
+top:50%;
+
+left:18px;
+
+transform:translateY(-50%);
+
+color:#2563eb;
+
+}
+
+.input-box input{
+
+width:100%;
+
+padding:16px 18px 16px 50px;
+
+background:#f8fafc;
+
+border:1px solid #cbd5e1;
+
+color:#1e293b;
+
+border-radius:15px;
+
+outline:none;
+
+font-size:15px;
+
+transition:.3s;
+
+}
+
+.input-box input:focus{
+
+border-color:#38bdf8;
+
+box-shadow:0 0 15px rgba(56,189,248,.25);
+
+}
+
+.login-btn{
+
+width:100%;
+
+padding:17px;
+
+border:none;
+
+border-radius:15px;
+
+background:linear-gradient(135deg,#2563eb,#38bdf8);
+
+color:white;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.35s;
+
+}
+
+.login-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 20px 40px rgba(37,99,235,.35);
+
+}
+
+.footer{
+
+margin-top:30px;
+
+text-align:center;
+
+color:#64748b;
+
+font-size:14px;
+
+}
+
+@media(max-width:900px){
+
+.login-wrapper{
+
+grid-template-columns:1fr;
+
+height:auto;
+
+}
+
+.left-panel{
+
+display:none;
+
+}
+
+.right-panel{
+
+padding:40px 25px;
+
+}
+
+}
+
+</style>
+
+</head>
+<body>
+    <!-- Floating Background Icons -->
+        <i class="fa-solid fa-heart-pulse icon"></i>
+        <i class="fa-solid fa-stethoscope icon"></i>
+        <i class="fa-solid fa-user-doctor icon"></i>
+        <i class="fa-solid fa-kit-medical icon"></i>
+        <div class="login-wrapper">
+        <!--================ LEFT PANEL ================-->
+        <div class="left-panel">
+            <i class="fa-solid fa-heart-pulse hospital-icon"></i>
+            <h1>MediFlow HMS</h1>
+            <p>
+                Smart Hospital Management System built for doctors,
+                staff and administrators.
+                Manage appointments, patients, billing,
+                pharmacy and reports from one secure platform.
+            </p>
+            <div class="features">
+                <div class="feature">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    <span>100+ Doctors</span>
+                </div>
+                <div class="feature">
+                    <i class="fa-solid fa-bed"></i>
+                    <span>500+ Patients</span>
+                </div>
+                <div class="feature">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <span>Secure Records</span>
+                </div>
+                <div class="feature">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>24/7 Monitoring</span>
+                </div>
+            </div>
+        </div>
+            <!--================ RIGHT PANEL ================-->
+
+        <div class="right-panel">
+            <div class="login-card">
+                <div class="login-logo">
+                    <i class="fa-solid fa-hospital"></i>
+                </div>
+                <h2>Welcome Back</h2>
+                <p>
+                    Login to access your hospital dashboard.
+                </p>
+                <form>
+                    <!-- Username -->
+                    <div class="input-group">
+                        <label>Username</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" placeholder="Enter username" required>
+                        </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-box password-box">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="password" placeholder="Enter password" required>
+                            <span id="togglePassword">
+                                <i class="fa-solid fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Options -->
+                    <div class="options">
+                        <label>
+                            <input type="checkbox">
+                            Remember Me
+                        </label>
+                        <a href="#">Forgot Password?</a>
+                        </div>
+                        <!-- Button -->
+                        <button type="button" class="login-btn" onclick="login()">
+                         <i class="fa-solid fa-right-to-bracket"></i>
+                          Login to Dashboard
+                        </button>
+                    </form>
+                    <div class="footer">
+                        © 2026 MediFlow HMS
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </body>
+    <script>
+        function login() {
+
+            const username = document.querySelector('input[type="text"]').value;
+            const password = document.querySelector('#password').value;
+
+            if(username === "" || password === "")
+            {
+                alert("Please enter username and password.");
+                return;
+            }
+
+            // Redirect to dashboard
+            window.location.href = "dashboard.html";
+
+        }
+        </script>
+</html>

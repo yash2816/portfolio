@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediFlow HMS | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!--================ NAVIGATION BAR ================-->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-hospital"></i>
+                <span>MediFlow</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="#"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+                <li><a href="doctors.html"><i class="fa-solid fa-user-doctor"></i> Doctors</a></li>
+                <li><a href="#"><i class="fa-solid fa-users"></i> Patients</a></li>
+                <li><a href="#"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
+                <li class="dropdown">
+                    <a href="#">More <i class="fa-solid fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#"><i class="fa-solid fa-bed"></i> Beds</a>
+                        <a href="#"><i class="fa-solid fa-pills"></i> Pharmacy</a>
+                        <a href="#"><i class="fa-solid fa-flask"></i> Lab</a>
+                        <a href="#"><i class="fa-solid fa-truck-medical"></i> Ambulance</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="notification">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="badge">5</span>
+                </div>
+                <div class="profile">
+                    <img src="https://i.pravatar.cc/40?img=12" alt="Admin">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!--================ MAIN CONTENT ================-->
+    <main class="container">
+        <div class="page-title">
+            <div>
+                <h1>Dashboard Overview</h1>
+                <p>Welcome back, Admin! Here's what's happening today.</p>
+            </div>
+            <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Admission</button>
+        </div>
+
+        <!--================ STATS GRID ================-->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="icon blue"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info">
+                    <h3>1,258</h3>
+                    <p>Total Patients</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon green"><i class="fa-solid fa-user-doctor"></i></div>
+                <div class="stat-info">
+                    <h3>154</h3>
+                    <p>Doctors</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon orange"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="stat-info">
+                    <h3>286</h3>
+                    <p>Appointments</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon red"><i class="fa-solid fa-truck-medical"></i></div>
+                <div class="stat-info">
+                    <h3>12</h3>
+                    <p>Emergencies</p>
+                </div>
+            </div>
+        </section>
+
+        <!--================ DATA SECTION ================-->
+        <div class="content-layout">
+            <div class="main-column">
+                <div class="table-card">
+                    <div class="card-header">
+                        <h2>Recent Appointments</h2>
+                        <button class="btn-text">View All</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>John Smith</strong></td>
+                                    <td>Dr. Patel</td>
+                                    <td>25 Jul 2026</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Emma Watson</strong></td>
+                                    <td>Dr. Shah</td>
+                                    <td>25 Jul 2026</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Michael Lee</strong></td>
+                                    <td>Dr. Mehta</td>
+                                    <td>26 Jul 2026</td>
+                                    <td><span class="status cancelled">Cancelled</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-card">
+                    <div class="card-header">
+                        <h2>Available Doctors</h2>
+                        <button class="btn-text">View All</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Experience</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Dr. Raj Patel</td>
+                                    <td>Cardiology</td>
+                                    <td>12 Years</td>
+                                </tr>
+                                <tr>
+                                    <td>Dr. Priya Shah</td>
+                                    <td>Neurology</td>
+                                    <td>8 Years</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="side-column">
+                <div class="mini-card">
+                    <h3>Today's Schedule</h3>
+                    <ul class="schedule">
+                        <li>
+                            <span class="time">09:00 AM</span>
+                            <span class="event">Cardiology Meeting</span>
+                        </li>
+                        <li>
+                            <span class="time">11:30 AM</span>
+                            <span class="event">Emergency Review</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mini-card activity-card">
+                    <h3>Hospital Activity</h3>
+                    <div class="activity-item">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <p>8 Surgeries Completed</p>
+                    </div>
+                    <div class="activity-item">
+                        <i class="fa-solid fa-flask"></i>
+                        <p>32 Lab Reports Ready</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 MediFlow Hospital Management. All Rights Reserved.</p>
+        </footer>
+    </main>
+
+</body>
+</html>

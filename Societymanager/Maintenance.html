@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Management - Milestone Society</title>
+
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --primary-light: #eef2ff;
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-dark);
+      padding-top: 75px; /* Space for fixed navbar */
+    }
+
+    /* ================= 1. TOP NAVIGATION BAR ================= */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-icon-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dark);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.4rem;
+      background: none;
+      border: none;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+
+    /* ================= 2. MAIN CONTAINER ================= */
+    .dashboard-container {
+      max-width: 1300px;
+      margin: 28px auto;
+      padding: 0 24px;
+    }
+
+    /* Header Section */
+    .welcome-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .welcome-text h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .welcome-text p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-dark);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f1f5f9;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+
+    /* Stat Cards Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .icon-emerald { background-color: #ecfdf5; color: #10b981; }
+    .icon-rose { background-color: #ffe4e6; color: #f43f5e; }
+    .icon-indigo { background-color: #eef2ff; color: #4f46e5; }
+    .icon-amber { background-color: #fffbeb; color: #f59e0b; }
+
+    /* Card & Table */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box {
+      padding: 8px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      outline: none;
+      font-size: 0.88rem;
+      width: 260px;
+    }
+
+    .search-box:focus {
+      border-color: var(--primary);
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    th {
+      color: var(--text-muted);
+      font-weight: 600;
+      background-color: #f8fafc;
+    }
+
+    tr:hover {
+      background-color: #f8fafc;
+    }
+
+    /* Badges */
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .badge-paid { background: #d1fae5; color: #047857; }
+    .badge-pending { background: #fee2e2; color: #b91c1c; }
+
+    /* FAB Button */
+    .fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 900;
+    }
+
+    .fab:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    /* Modern Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+      position: relative;
+      animation: modalFadeIn 0.2s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .close {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .close:hover {
+      color: var(--text-dark);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .detail-row span {
+      color: var(--text-muted);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .navbar { padding: 0 16px; }
+      .menu-toggle { display: block; }
+      .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0; right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow);
+        display: none;
+      }
+      .nav-menu.show { display: flex; }
+      .search-box { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="nav-brand">
+      <i class="fa-solid fa-city"></i>
+      <span>Milestone Society</span>
+    </a>
+
+    <button class="menu-toggle" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <div class="nav-link" onclick="go('dashboard.html')"><i class="fa-solid fa-chart-line"></i> Dashboard</div>
+      <div class="nav-link" onclick="go('Resident.html')"><i class="fa-solid fa-users"></i> Residents</div>
+      <div class="nav-link active"><i class="fa-solid fa-receipt"></i> Maintenance</div>
+      <div class="nav-link" onclick="go('Notice-board.html')"><i class="fa-solid fa-bullhorn"></i> Notice Board</div>
+      <div class="nav-link" onclick="go('Complaint.html')"><i class="fa-solid fa-headset"></i> Complaints</div>
+      <div class="nav-link"><i class="fa-solid fa-shield-halved"></i> Security</div>
+      <div class="nav-link"><i class="fa-solid fa-gear"></i> Settings</div>
+      <div class="nav-link" style="color: var(--danger);" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</div>
+    </div>
+
+    <div class="nav-right">
+      <button class="nav-icon-btn" onclick="alert('No new notifications!')">
+        <i class="fa-regular fa-bell"></i>
+      </button>
+      <div class="user-profile">
+        <div class="avatar">SEC</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-container">
+
+    <!-- Header Section -->
+    <div class="welcome-header">
+      <div class="welcome-text">
+        <h1>💰 Maintenance Management</h1>
+        <p>Track, manage, and record resident maintenance dues.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="alert('Downloading collection summary...')">
+          <i class="fa-solid fa-file-excel"></i> Export
+        </button>
+        <button class="btn btn-primary" onclick="openAddModal()">
+          <i class="fa-solid fa-plus"></i> Add Entry
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Total Collection</div>
+          <div class="stat-value" id="statCollected">₹2,50,000</div>
+        </div>
+        <div class="stat-icon icon-emerald">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Pending Dues</div>
+          <div class="stat-value" id="statPending">₹45,000</div>
+        </div>
+        <div class="stat-icon icon-rose">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Paid Members</div>
+          <div class="stat-value" id="statPaidCount">120</div>
+        </div>
+        <div class="stat-icon icon-indigo">
+          <i class="fa-solid fa-user-check"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Unpaid Members</div>
+          <div class="stat-value" id="statUnpaidCount">18</div>
+        </div>
+        <div class="stat-icon icon-amber">
+          <i class="fa-solid fa-user-xmark"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Records Table Card -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <i class="fa-solid fa-list-check" style="color: var(--primary);"></i>
+          Maintenance Records
+        </div>
+        <input type="text" id="searchInput" class="search-box" placeholder="Search flat or name..." onkeyup="filterTable()">
+      </div>
+
+      <div class="table-responsive">
+        <table id="recordsTable">
+          <thead>
+            <tr>
+              <th>Flat No</th>
+              <th>Resident Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>101</strong></td>
+              <td>Rahul Patel</td>
+              <td><span class="badge badge-paid">Paid</span></td>
+              <td>₹2,500</td>
+              <td>
+                <button class="btn btn-secondary btn-sm" onclick="openDetails('101','Rahul Patel','Paid','₹2,500','9876543210')">
+                  <i class="fa-solid fa-eye"></i> View
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>102</strong></td>
+              <td>Amit Shah</td>
+              <td><span class="badge badge-pending">Pending</span></td>
+              <td>₹2,500</td>
+              <td>
+                <button class="btn btn-primary btn-sm" onclick="markPaid(this, '102')">
+                  Pay Now
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="openDetails('102','Amit Shah','Pending','₹2,500','9876543211')">
+                  View
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>103</strong></td>
+              <td>Priya Mehta</td>
+              <td><span class="badge badge-paid">Paid</span></td>
+              <td>₹2,500</td>
+              <td>
+                <button class="btn btn-secondary btn-sm" onclick="openDetails('103','Priya Mehta','Paid','₹2,500','9876543212')">
+                  <i class="fa-solid fa-eye"></i> View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- VIEW DETAILS MODAL -->
+  <div id="viewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Maintenance Details</h2>
+        <span class="close" onclick="closeModal()">&times;</span>
+      </div>
+
+      <div class="detail-row"><span>Flat No:</span> <strong id="mFlat">--</strong></div>
+      <div class="detail-row"><span>Resident Name:</span> <strong id="mName">--</strong></div>
+      <div class="detail-row"><span>Contact:</span> <strong id="mContact">--</strong></div>
+      <div class="detail-row"><span>Status:</span> <strong id="mStatus">--</strong></div>
+      <div class="detail-row"><span>Amount:</span> <strong id="mAmount">--</strong></div>
+
+      <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="redirectToDetail()">Full Details Page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB (+) BUTTON -->
+  <button class="fab" title="Add Maintenance" onclick="openAddModal()">+</button>
+
+  <script>
+    // Navigation Function
+    function go(page) {
+      window.location.href = page;
+    }
+
+    // Toggle Mobile Navbar
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('show');
+    }
+
+    // Logout
+    function logout() {
+      alert("Logged out successfully!");
+    }
+
+    // Open View Details Modal
+    function openDetails(flat, name, status, amount, phone = "N/A") {
+      // Store in LocalStorage (matching original script)
+      localStorage.setItem("flat", flat);
+      localStorage.setItem("name", name);
+      localStorage.setItem("status", status);
+      localStorage.setItem("amount", amount);
+
+      // Populate Modal Fields
+      document.getElementById("mFlat").innerText = flat;
+      document.getElementById("mName").innerText = name;
+      document.getElementById("mStatus").innerText = status;
+      document.getElementById("mAmount").innerText = amount;
+      document.getElementById("mContact").innerText = phone;
+
+      // Show Modal
+      document.getElementById("viewModal").style.display = "flex";
+    }
+
+    // Redirect to detail page if requested
+    function redirectToDetail() {
+      window.location.href = "maintenance-detail.html";
+    }
+
+    // Close Modal
+    function closeModal() {
+      document.getElementById("viewModal").style.display = "none";
+    }
+
+    // Mark as Paid live action
+    function markPaid(btn, flatNo) {
+      const tr = btn.closest('tr');
+      const statusTd = tr.cells[2];
+      statusTd.innerHTML = '<span class="badge badge-paid">Paid</span>';
+      
+      const actionsTd = tr.cells[4];
+      const name = tr.cells[1].innerText;
+      actionsTd.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="openDetails('${flatNo}','${name}','Paid','₹2,500')"><i class="fa-solid fa-eye"></i> View</button>`;
+      
+      alert(`Payment of ₹2,500 recorded for Flat ${flatNo}`);
+    }
+
+    // Add New Entry Modal Prompt
+    function openAddModal() {
+      const flat = prompt("Enter Flat Number:");
+      if (!flat) return;
+      const name = prompt("Enter Resident Name:");
+      if (!name) return;
+      const amount = prompt("Enter Due Amount (e.g. ₹2500):", "₹2,500");
+      if (!amount) return;
+
+      const tbody = document.querySelectorAll("#recordsTable tbody")[0];
+      const newRow = `
+        <tr>
+          <td><strong>${flat}</strong></td>
+          <td>${name}</td>
+          <td><span class="badge badge-pending">Pending</span></td>
+          <td>${amount}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="markPaid(this, '${flat}')">Pay Now</button>
+            <button class="btn btn-secondary btn-sm" onclick="openDetails('${flat}','${name}','Pending','${amount}')">View</button>
+          </td>
+        </tr>
+      `;
+      tbody.insertAdjacentHTML('afterbegin', newRow);
+    }
+
+    // Filter Search
+    function filterTable() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#recordsTable tbody tr");
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(input) ? "" : "none";
+      });
+    }
+
+    // Close modal when clicking outside content box
+    window.onclick = function(event) {
+      const modal = document.getElementById("viewModal");
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Society Secretary Dashboard</title>
+  
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --primary-light: #eef2ff;
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-dark);
+      padding-top: 70px; /* Space for fixed navbar */
+    }
+
+    /* ================= 1. TOP NAVIGATION BAR ================= */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-brand i {
+      font-size: 1.5rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-icon-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dark);
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .nav-icon-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      background-color: var(--danger);
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+
+    /* ================= 2. DASHBOARD CONTENT ================= */
+    .dashboard-container {
+      max-width: 1300px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+
+    /* Greeting Header */
+    .welcome-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .welcome-text h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+    }
+
+    .welcome-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-dark);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f1f5f9;
+    }
+
+    /* Stat Cards Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .stat-subtext {
+      font-size: 0.8rem;
+      color: var(--success);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .icon-indigo { background-color: #eef2ff; color: #4f46e5; }
+    .icon-emerald { background-color: #ecfdf5; color: #10b981; }
+    .icon-amber { background-color: #fffbeb; color: #f59e0b; }
+    .icon-rose { background-color: #ffe4e6; color: #f43f5e; }
+
+    /* Dashboard Main Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    /* Content Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Custom Table */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    th {
+      color: var(--text-muted);
+      font-weight: 600;
+      background-color: #f8fafc;
+    }
+
+    /* Badges */
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .badge-success { background: #d1fae5; color: #047857; }
+    .badge-warning { background: #fef3c7; color: #b45309; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; }
+
+    /* Notices List Widget */
+    .notice-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .notice-item:last-child {
+      border-bottom: none;
+    }
+
+    .notice-item h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .notice-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .notice-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Quick Action List */
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .quick-action-btn {
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .quick-action-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .quick-action-btn i {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .quick-action-btn span {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* ================= 3. RESPONSIVE DESIGN ================= */
+    @media (max-width: 992px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 16px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow);
+        display: none; /* Toggled via JS */
+      }
+
+      .nav-menu.show {
+        display: flex;
+      }
+
+      .user-info {
+        display: none; /* Hide name on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVIGATION BAR -->
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="nav-brand">
+      <i class="fa-solid fa-city"></i>
+      <span>Milestone Society</span>
+    </a>
+
+    <button class="menu-toggle" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <div class="nav-link active" onclick="go('dashboard.html')"><i class="fa-solid fa-chart-line"></i> Dashboard</div>
+      <div class="nav-link" onclick="go('Resident.html')"><i class="fa-solid fa-users"></i> Residents</div>
+      <div class="nav-link" onclick="go('Maintenance.html')"><i class="fa-solid fa-receipt"></i> Maintenance</div>
+      <div class="nav-link" onclick="go('Notice-board.html')"><i class="fa-solid fa-bullhorn"></i> Notice Board</div>
+      <div class="nav-link" onclick="go('Complaint.html')"><i class="fa-solid fa-headset"></i> Complaints</div>
+      <div class="nav-link"><i class="fa-solid fa-shield-halved"></i> Security</div>
+      <div class="nav-link"><i class="fa-solid fa-gear"></i> Settings</div>
+      <div class="nav-link" style="color: var(--danger);" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</div>
+    </div>
+
+    <div class="nav-right">
+      <button class="nav-icon-btn" onclick="alert('No new notifications!')">
+        <i class="fa-regular fa-bell"></i>
+      </button>
+      <div class="user-profile">
+        <div class="avatar">SEC</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="dashboard-container">
+
+    <!-- Greeting Section -->
+    <div class="welcome-header">
+      <div class="welcome-text">
+        <h1>Welcome Back, Secretary! 👋</h1>
+        <p>Here is what is happening in Grand Heights Society today.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="alert('Exporting Report...')">
+          <i class="fa-solid fa-download"></i> Report
+        </button>
+        <button class="btn btn-primary" onclick="publishNoticePrompt()">
+          <i class="fa-solid fa-plus"></i> Post Notice
+        </button>
+      </div>
+    </div>
+
+    <!-- Key Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Total Dues Collected</div>
+          <div class="stat-value">$18,450</div>
+          <div class="stat-subtext"><i class="fa-solid fa-arrow-up"></i> +12% from last month</div>
+        </div>
+        <div class="stat-icon icon-emerald">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Pending Maintenance</div>
+          <div class="stat-value">8 Flats</div>
+          <div class="stat-subtext" style="color: var(--danger);"><i class="fa-solid fa-clock"></i> Total $1,200 due</div>
+        </div>
+        <div class="stat-icon icon-amber">
+          <i class="fa-solid fa-file-invoice"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Open Complaints</div>
+          <div class="stat-value">3 Active</div>
+          <div class="stat-subtext"><i class="fa-solid fa-circle-info"></i> 1 urgent plumber request</div>
+        </div>
+        <div class="stat-icon icon-rose">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div>
+          <div class="stat-label">Total Occupancy</div>
+          <div class="stat-value">94%</div>
+          <div class="stat-subtext"><i class="fa-solid fa-house"></i> 113 / 120 Flats occupied</div>
+        </div>
+        <div class="stat-icon icon-indigo">
+          <i class="fa-solid fa-building"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Grid (Table + Sidebar Widgets) -->
+    <div class="dashboard-grid">
+
+      <!-- Left Column: Tables -->
+      <div>
+        <!-- Recent Complaints -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-list-check" style="color: var(--primary);"></i>
+              Recent Resident Complaints
+            </div>
+            <a href="#" class="btn btn-secondary" style="padding: 6px 12px; font-size:0.8rem;">View All</a>
+          </div>
+
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Flat No.</th>
+                  <th>Issue Type</th>
+                  <th>Submitted</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="complaintsTable">
+                <tr>
+                  <td><strong>A-204</strong></td>
+                  <td>Plumbing Leakage</td>
+                  <td>2 hrs ago</td>
+                  <td><span class="badge badge-danger">High</span></td>
+                  <td><span class="badge badge-warning">In Progress</span></td>
+                  <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" onclick="resolveRow(this)">Resolve</button></td>
+                </tr>
+                <tr>
+                  <td><strong>B-101</strong></td>
+                  <td>Elevator Noise</td>
+                  <td>Yesterday</td>
+                  <td><span class="badge badge-warning">Medium</span></td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" onclick="resolveRow(this)">Resolve</button></td>
+                </tr>
+                <tr>
+                  <td><strong>C-502</strong></td>
+                  <td>Parking Slot Dispute</td>
+                  <td>3 days ago</td>
+                  <td><span class="badge badge-success">Low</span></td>
+                  <td><span class="badge badge-success">Resolved</span></td>
+                  <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" disabled>Done</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pending Maintenance Payments -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-credit-card" style="color: var(--primary);"></i>
+              Pending Maintenance Due (July 2026)
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Flat</th>
+                  <th>Resident Name</th>
+                  <th>Due Amount</th>
+                  <th>Status</th>
+                  <th>Send Reminder</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>A-102</strong></td>
+                  <td>Sarah Connor</td>
+                  <td>$150.00</td>
+                  <td><span class="badge badge-danger">Unpaid</span></td>
+                  <td><button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="alert('Reminder sent to Sarah!')"><i class="fa-solid fa-paper-plane"></i> Notify</button></td>
+                </tr>
+                <tr>
+                  <td><strong>B-202</strong></td>
+                  <td>Peter Parker</td>
+                  <td>$150.00</td>
+                  <td><span class="badge badge-danger">Unpaid</span></td>
+                  <td><button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="alert('Reminder sent to Peter!')"><i class="fa-solid fa-paper-plane"></i> Notify</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Sidebar Widgets -->
+      <div>
+        
+        <!-- Quick Actions -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Quick Actions</div>
+          </div>
+          <div class="quick-actions-grid">
+            <a href="#" class="quick-action-btn" onclick="publishNoticePrompt()">
+              <i class="fa-solid fa-bullhorn" style="color: var(--primary);"></i>
+              <span>Post Notice</span>
+            </a>
+            <a href="#" class="quick-action-btn" onclick="alert('Generating monthly invoices...')">
+              <i class="fa-solid fa-file-invoice-dollar" style="color: var(--success);"></i>
+              <span>Generate Bills</span>
+            </a>
+            <a href="#" class="quick-action-btn" onclick="alert('Opening Gate Security Log...')">
+              <i class="fa-solid fa-shield-halved" style="color: var(--warning);"></i>
+              <span>Gate Log</span>
+            </a>
+            <a href="#" class="quick-action-btn" onclick="alert('Opening Amenity Booking Manager...')">
+              <i class="fa-solid fa-calendar-check" style="color: var(--danger);"></i>
+              <span>Bookings</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Recent Announcements -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-bullhorn" style="color: var(--primary);"></i>
+              Notice Board
+            </div>
+          </div>
+          
+          <div id="noticesContainer">
+            <div class="notice-item">
+              <h4>Water Tank Cleaning Scheduled</h4>
+              <p>Water supply will be paused on Tuesday between 10 AM and 2 PM for routine cleaning.</p>
+              <div class="notice-meta">
+                <span><i class="fa-regular fa-clock"></i> Posted Today</span>
+                <span class="badge badge-warning">Maintenance</span>
+              </div>
+            </div>
+
+            <div class="notice-item">
+              <h4>Monsoon Preparedness Review</h4>
+              <p>All residents are requested to clear balcony drain pipes before heavy rains start.</p>
+              <div class="notice-meta">
+                <span><i class="fa-regular fa-clock"></i> Posted 2 days ago</span>
+                <span class="badge badge-success">General</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Toggle Mobile Navbar Menu
+    function toggleMenu() {
+      const menu = document.getElementById('navMenu');
+      menu.classList.toggle('show');
+    }
+
+    // Interactive Notice Creation
+    function publishNoticePrompt() {
+      const title = prompt("Enter Notice Title:");
+      if (!title) return;
+      
+      const desc = prompt("Enter Notice Details:");
+      if (!desc) return;
+
+      const container = document.getElementById('noticesContainer');
+      const newNoticeHTML = `
+        <div class="notice-item">
+          <h4>${title}</h4>
+          <p>${desc}</p>
+          <div class="notice-meta">
+            <span><i class="fa-regular fa-clock"></i> Posted Just now</span>
+            <span class="badge badge-success">New</span>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('afterbegin', newNoticeHTML);
+      alert('Notice published successfully to resident portal!');
+    }
+
+    // Resolve Complaint Row Dynamically
+    function resolveRow(button) {
+      const row = button.closest('tr');
+      const statusCell = row.cells[4];
+      statusCell.innerHTML = '<span class="badge badge-success">Resolved</span>';
+      button.innerText = 'Done';
+      button.disabled = true;
+    }
+    // Navigation Function
+    function go(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

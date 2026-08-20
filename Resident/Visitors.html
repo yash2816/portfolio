@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visitors</title>
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #efebe9, #ffffff);
+}
+
+/* NAVBAR */
+.navbar {
+  background: linear-gradient(90deg, #5d4037, #8d6e63);
+  color: white;
+  padding: 15px 25px;
+}
+
+.nav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-menu div {
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-menu div:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* HEADER */
+.header {
+  margin: 20px;
+  padding: 30px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #6d4c41, #a1887f);
+  color: white;
+  text-align: center;
+}
+
+/* SUMMARY */
+.summary {
+  display: flex;
+  gap: 20px;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  flex: 1;
+  min-width: 150px;
+  background: #6d4c41;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+/* TABLE CONTAINER */
+.container {
+  margin: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #6d4c41;
+  color: white;
+  padding: 12px;
+}
+
+td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* STATUS */
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.approved {
+  background: #d4edda;
+  color: green;
+}
+
+.pending {
+  background: #fff3cd;
+  color: orange;
+}
+
+.rejected {
+  background: #f8d7da;
+  color: red;
+}
+
+/* BUTTON */
+.btn {
+  padding: 6px 12px;
+  border: none;
+  background: #6d4c41;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #4e342e;
+}
+
+/* FAB */
+.fab {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: linear-gradient(135deg, #6d4c41, #8d6e63);
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* MOBILE VIEW */
+@media(max-width:768px){
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #5d4037;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-top">
+    <h2>🏢 Milestone Society / Resident</h2>
+    <div>🔔 👤</div>
+  </div>
+
+  <div class="nav-menu">
+    <div onclick="go('dashboard.html')">Dashboard</div>
+    <div onclick="go('My Profile.html')">My Profile</div>
+    <div onclick="go('My Maintenance.html')">My Maintenance</div>
+    <div onclick="go('Complaint.html')">Complaint</div>
+    <div onclick="go('Notice.html')">Notice</div>
+    <div>Visitors</div>
+    <div onclick="go('Login.html')">Logout</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h2>👥 Visitors Management</h2>
+  <p>Track your visitors easily</p>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary">
+  <div class="summary-card">
+    <h3>05</h3>
+    <p>Today Visitors</p>
+  </div>
+
+  <div class="summary-card">
+    <h3>02</h3>
+    <p>Pending Approval</p>
+  </div>
+
+  <div class="summary-card">
+    <h3>20</h3>
+    <p>Total Visitors</p>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="container">
+  <h3>Visitor Records</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Purpose</th>
+        <th>Entry</th>
+        <th>Exit</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td data-label="Name">Ramesh Kumar</td>
+        <td data-label="Purpose">Delivery</td>
+        <td data-label="Entry">10:30 AM</td>
+        <td data-label="Exit">11:00 AM</td>
+        <td data-label="Status"><span class="status approved">Approved</span></td>
+        <td data-label="Action"><button class="btn">View</button></td>
+      </tr>
+
+      <tr>
+        <td data-label="Name">Amit Sharma</td>
+        <td data-label="Purpose">Guest</td>
+        <td data-label="Entry">12:00 PM</td>
+        <td data-label="Exit">-</td>
+        <td data-label="Status"><span class="status pending">Pending</span></td>
+        <td data-label="Action"><button class="btn">Approve</button></td>
+      </tr>
+
+      <tr>
+        <td data-label="Name">Delivery Boy</td>
+        <td data-label="Purpose">Food Delivery</td>
+        <td data-label="Entry">02:15 PM</td>
+        <td data-label="Exit">02:30 PM</td>
+        <td data-label="Status"><span class="status rejected">Rejected</span></td>
+        <td data-label="Action"><button class="btn">View</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="addVisitor()">+</button>
+
+<script>
+function go(page){
+  window.location.href = page;
+}
+
+function logout(){
+  alert("Logged out!");
+}
+
+function addVisitor(){
+  alert("Open Add Visitor Form");
+}
+</script>
+
+</body>
+</html>

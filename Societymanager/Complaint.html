@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complaints</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e3f2fd, #ffffff);
+}
+
+/* NAVBAR */
+.navbar {
+  background: linear-gradient(90deg, #3f51b5, #5c6bc0);
+  color: white;
+  padding: 15px 25px;
+}
+
+.nav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-menu div {
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nav-menu div:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* HEADER */
+.header {
+  margin: 20px;
+  padding: 30px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #3f51b5, #7986cb);
+  color: white;
+}
+
+.summary {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.summary div {
+  background: rgba(255,255,255,0.2);
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+/* CONTAINER */
+.container {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.container h3 {
+  margin-bottom: 15px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background: #3f51b5;
+  color: white;
+  border-radius: 8px;
+}
+
+tr {
+  background: white;
+}
+
+tr:hover {
+  background: #f1f3ff;
+}
+
+/* STATUS COLORS */
+.pending {
+  color: orange;
+  font-weight: 600;
+}
+.resolved {
+  color: green;
+  font-weight: 600;
+}
+.rejected {
+  color: red;
+  font-weight: 600;
+}
+
+/* BUTTON */
+.btn {
+  background: #3f51b5;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #303f9f;
+}
+
+/* FAB */
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #3f51b5;
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-top">
+    <h2>🏢 Milestone Society / Secretary</h2>
+    <div>🔔 👤</div>
+  </div>
+
+  <div class="nav-menu">
+    <div onclick="go('dashboard.html')">Dashboard</div>
+    <div onclick="go('Residents.html')">Residents</div>
+    <div onclick="go('Maintenance.html')">Maintenance</div>
+    <div onclick="go('Notice-board.html')">Notice Board</div>
+    <div style="background: rgba(255,255,255,0.2)">Complaints</div>
+    <div>Security</div>
+    <div>Settings</div>
+    <div onclick="logout()">Logout</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h2>🛠 Complaint Management</h2>
+
+  <div class="summary">
+    <div>
+      <h3>45</h3>
+      <p>Total Complaints</p>
+    </div>
+    <div>
+      <h3>12</h3>
+      <p>Pending</p>
+    </div>
+    <div>
+      <h3>30</h3>
+      <p>Resolved</p>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="container">
+  <h3>Complaint Records</h3>
+
+  <table>
+    <tr>
+      <th>Flat No</th>
+      <th>Name</th>
+      <th>Issue</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+    <tr>
+      <td>101</td>
+      <td>Rahul Patel</td>
+      <td>Water Leakage</td>
+      <td class="pending">Pending</td>
+      <td>
+        <button class="btn" onclick="viewComplaint('101','Rahul Patel','Water Leakage','Pending')">View</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td>102</td>
+      <td>Amit Shah</td>
+      <td>Lift Not Working</td>
+      <td class="resolved">Resolved</td>
+      <td>
+        <button class="btn" onclick="viewComplaint('102','Amit Shah','Lift Not Working','Resolved')">View</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td>103</td>
+      <td>Priya Mehta</td>
+      <td>Parking Issue</td>
+      <td class="pending">Pending</td>
+      <td>
+        <button class="btn" onclick="viewComplaint('103','Priya Mehta','Parking Issue','Pending')">View</button>
+      </td>
+    </tr>
+
+  </table>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="addComplaint()">+</button>
+
+<script>
+function go(page){
+  window.location.href = page;
+}
+
+function logout(){
+  alert("Logged out!");
+}
+
+function viewComplaint(flat, name, issue, status){
+  localStorage.setItem("flat", flat);
+  localStorage.setItem("name", name);
+  localStorage.setItem("issue", issue);
+  localStorage.setItem("status", status);
+
+  window.location.href = "Complaint-detail.html";
+}
+
+function addComplaint(){
+  alert("Open Add Complaint Form");
+}
+</script>
+
+</body>
+</html>

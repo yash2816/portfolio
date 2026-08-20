@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resident Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #efebe9, #ffffff);
+}
+
+/* NAVBAR */
+.navbar {
+  background: linear-gradient(90deg, #5d4037, #8d6e63);
+  color: white;
+  padding: 15px 25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.nav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-menu div {
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-menu div:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* HEADER */
+.header {
+  margin: 20px;
+  padding: 30px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #6d4c41, #a1887f);
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.summary {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.summary div {
+  background: rgba(255,255,255,0.2);
+  padding: 15px;
+  border-radius: 15px;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(15px);
+  border-radius: 25px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card p {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #6d4c41;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+/* ACTIVITY */
+.activity {
+  margin: 20px;
+}
+
+.activity-item {
+  background: white;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 40px;
+  padding: 20px;
+  background: linear-gradient(90deg, #5d4037, #8d6e63);
+  color: white;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+@media(max-width:768px){
+  .footer-container {
+    text-align: center;
+    flex-direction: column;
+  }
+}
+button{
+  box-sizing: border-box;
+  border-radius: 15px;
+  border: #ffffff;
+}
+</style>
+
+</head> 
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-top">
+    <h2>🏢 Milestone Society / Resident</h2>
+    <div>🔔 👤</div>
+  </div>
+
+  <div class="nav-menu">
+    <div>Dashboard</div>
+    <div onclick="go('My Profile.html')">My Profile</div>
+    <div onclick="go('My Maintenance.html')">My Maintenance</div>
+    <div onclick="go('Complaint.html')">Complaints</div>
+    <div onclick="go('Notice.html')">Notices</div>
+    <div onclick="go('Visitors.html')">Visitors</div>
+    <div onclick="logout()">Logout</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <p>Welcome back,</p>
+  <h2>YashKumar D Patel</h2>
+
+  <div class="summary">
+    <div>
+      <h3>₹2500</h3>
+      <p>Pending Dues</p>
+    </div>
+    <div>
+      <h3>02</h3>
+      <p>My Complaints</p>
+    </div>
+    <div>
+      <h3>05</h3>
+      <p>Visitors Today</p>
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+  <button onclick="go('My Profile.html')">
+    <div class="card">
+      <p>👤</p>
+      <h4>My Profile</h4>
+    </div>
+  </button>
+
+  <button onclick="go('My Maintenance.html')">  
+    <div class="card">
+      <p>💰</p>
+      <h4>Pay Maintenance</h4>
+    </div>
+  </button>
+
+  <button onclick="go('Complaint.html')">
+    <div class="card">
+      <p>⚠️</p>
+      <h4>Raise Complaint</h4>
+    </div>
+  </button>
+
+  <button onclick="go('Notice.html')">
+    <div class="card">
+      <p>📢</p>
+      <h4>View Notices</h4>
+    </div>
+  </button>
+
+  <button onclick="go('Visitors.html')">
+    <div class="card">
+      <p>🛡️</p>
+      <h4>Visitors</h4>
+    </div>
+  </button>
+
+  <div class="card">
+    <p>📞</p>
+    <h4>Contact Office</h4>
+  </div>
+
+</div>
+
+<!-- ACTIVITY -->
+<div class="activity">
+  <h3>Recent Activity</h3>
+
+  <div class="activity-item">
+    <span>Maintenance Paid</span>
+    <span>₹2500</span>
+  </div>
+
+  <div class="activity-item">
+    <span>Complaint Submitted</span>
+    <span>Water Issue</span>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div>Smart Society Management</div>
+    <div>© 2026 All Rights Reserved</div>
+    <div>📞 +91 9427836272</div>
+  </div>
+</footer>
+
+<script>
+function logout(){
+  alert("Logged out!");
+}
+function go(page){
+  window.location.href = page;
+}
+</script>
+
+</body>
+</html>

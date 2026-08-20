@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediFlow HMS | Doctors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-bg: #dcfce7;
+            --success-text: #15803d;
+            --off-bg: #f1f5f9;
+            --off-text: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.85rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+            background: var(--primary-light);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .nav-links li.active a, 
+        .nav-links a:hover {
+            color: var(--primary);
+            background-color: var(--primary-light);
+        }
+
+        /* DROPDOWN */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--bg-card);
+            min-width: 200px;
+            box-shadow: var(--shadow-hover);
+            border-radius: var(--radius-md);
+            padding: 8px;
+            z-index: 1000;
+            border: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dropdown-content a {
+            color: var(--text-main) !important;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--primary-light) !important;
+            color: var(--primary) !important;
+        }
+
+        .dropdown a i.fa-chevron-down {
+            font-size: 0.7rem;
+            transition: transform 0.2s ease;
+        }
+
+        .dropdown:hover i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Invisible Hover Bridge */
+        .dropdown-content::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .notification {
+            position: relative;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .notification:hover {
+            background: #ffffff;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .page-title h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 2px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* FILTER SECTION */
+        .filter-section {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-bar-wide {
+            background: var(--bg-card);
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 280px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s;
+        }
+
+        .search-bar-wide:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-bar-wide i {
+            color: var(--text-muted);
+        }
+
+        .search-bar-wide input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-select {
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            outline: none;
+            cursor: pointer;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s;
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+        }
+
+        /* DOCTOR GRID */
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .doctor-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 1.5rem;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .card-status {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status.online {
+            background: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        .status.online::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--success-text);
+            display: inline-block;
+        }
+
+        .status.off {
+            background: var(--off-bg);
+            color: var(--off-text);
+        }
+
+        .card-image {
+            margin-bottom: 1.25rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--bg-body);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        .doctor-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .specialty {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 1.25rem;
+            padding: 8px 0;
+            background: var(--bg-body);
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .stats-row span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stats-row i.fa-star {
+            color: #f59e0b;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-outline, .btn-small-primary {
+            flex: 1;
+            padding: 9px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-body);
+            border-color: var(--text-muted);
+        }
+
+        .btn-small-primary {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: none;
+        }
+
+        .btn-small-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-hospital"></i>
+                <span>MediFlow</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+                <li class="active"><a href="doctors.html"><i class="fa-solid fa-user-doctor"></i> Doctors</a></li>
+                <li><a href="patients.html"><i class="fa-solid fa-users"></i> Patients</a></li>
+                <li><a href="appointment.html"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
+                <li class="dropdown">
+                    <a href="#">More <i class="fa-solid fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#"><i class="fa-solid fa-bed"></i> Beds</a>
+                        <a href="#"><i class="fa-solid fa-pills"></i> Pharmacy</a>
+                        <a href="#"><i class="fa-solid fa-flask"></i> Lab</a>
+                        <a href="#"><i class="fa-solid fa-truck-medical"></i> Ambulance</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="header-right">
+                <div class="notification">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge">5</span>
+                </div>
+                <div class="profile">
+                    <img src="https://i.pravatar.cc/80?img=12" alt="Admin Profile">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        <div class="page-title">
+            <div>
+                <h1>Our Doctors</h1>
+                <p>Manage, search, and view all registered hospital specialists.</p>
+            </div>
+            <button class="btn-primary"><i class="fa-solid fa-plus"></i> Add New Doctor</button>
+        </div>
+
+        <!-- SEARCH & FILTER BAR -->
+        <div class="filter-section">
+            <div class="search-bar-wide">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search by doctor name, specialty, or ID...">
+            </div>
+            <div class="filter-options">
+                <select class="filter-select">
+                    <option value="">All Departments</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="neurology">Neurology</option>
+                    <option value="pediatrics">Pediatrics</option>
+                    <option value="orthopedics">Orthopedics</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Availability Status</option>
+                    <option value="online">Online Now</option>
+                    <option value="offduty">Off Duty</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- DOCTORS GRID -->
+        <div class="doctor-grid">
+            
+            <!-- Doctor Card 1 -->
+            <div class="doctor-card">
+                <div class="card-status status online">Online</div>
+                <div class="card-image">
+                    <img src="https://i.pravatar.cc/120?img=11" alt="Dr. Raj Patel">
+                </div>
+                <div class="card-details">
+                    <h3>Dr. Raj Patel</h3>
+                    <p class="specialty">Senior Cardiologist</p>
+                    <div class="stats-row">
+                        <span><i class="fa-solid fa-star"></i> 4.9</span>
+                        <span><i class="fa-solid fa-briefcase"></i> 12 yrs exp</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-outline">Profile</button>
+                        <button class="btn-small-primary">Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 2 -->
+            <div class="doctor-card">
+                <div class="card-status status online">Online</div>
+                <div class="card-image">
+                    <img src="https://i.pravatar.cc/120?img=26" alt="Dr. Priya Shah">
+                </div>
+                <div class="card-details">
+                    <h3>Dr. Priya Shah</h3>
+                    <p class="specialty">Neurologist</p>
+                    <div class="stats-row">
+                        <span><i class="fa-solid fa-star"></i> 4.8</span>
+                        <span><i class="fa-solid fa-briefcase"></i> 8 yrs exp</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-outline">Profile</button>
+                        <button class="btn-small-primary">Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 3 -->
+            <div class="doctor-card">
+                <div class="card-status status off">Off Duty</div>
+                <div class="card-image">
+                    <img src="https://i.pravatar.cc/120?img=13" alt="Dr. Amit Mehta">
+                </div>
+                <div class="card-details">
+                    <h3>Dr. Amit Mehta</h3>
+                    <p class="specialty">Orthopedic Surgeon</p>
+                    <div class="stats-row">
+                        <span><i class="fa-solid fa-star"></i> 4.7</span>
+                        <span><i class="fa-solid fa-briefcase"></i> 15 yrs exp</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-outline">Profile</button>
+                        <button class="btn-small-primary">Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 4 -->
+            <div class="doctor-card">
+                <div class="card-status status online">Online</div>
+                <div class="card-image">
+                    <img src="https://i.pravatar.cc/120?img=45" alt="Dr. Neha Joshi">
+                </div>
+                <div class="card-details">
+                    <h3>Dr. Neha Joshi</h3>
+                    <p class="specialty">Pediatrician</p>
+                    <div class="stats-row">
+                        <span><i class="fa-solid fa-star"></i> 4.9</span>
+                        <span><i class="fa-solid fa-briefcase"></i> 10 yrs exp</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-outline">Profile</button>
+                        <button class="btn-small-primary">Book</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 MediFlow Hospital Management. All Rights Reserved.</p>
+        </footer>
+    </main>
+
+</body>
+</html>
