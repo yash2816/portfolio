@@ -198,17 +198,12 @@
         <h1>Men's Collection</h1>
     </header>
 
-    <div class="filter-bar">
-        <div class="filter-item active">All Items</div>
-        <div class="filter-item" onclick="go('T-Shirt.html')">T-Shirt</div>
-        <div class="filter-item">Shirts</div>
-        <div class="filter-item">Jeans</div>
-        <div class="filter-item">Gym Wear</div>
-        <div class="filter-item">Traditional</div>
-        <div class="filter-item">Shorts / Vest</div>
-        <div class="filter-item">Footwear</div>
-        <div class="filter-item">Watches</div>
-        <div class="filter-item">Fregrance</div>
+    <section class="men-categories">
+
+    <div class="category-card">
+        <img src="images/Mens/T-shirt.jpg">
+        <h3>T-Shirts</h3>
+        <a href="T-shirt.html">Shop Now</a>
     </div>
 
     <main class="container">
@@ -337,4 +332,31 @@
     </footer>
 
 </body>
+<script>
+        const categoryContainer = document.getElementById("men-categories");
+
+async function loadMenCategories() {
+  try {
+    const response = await fetch("categories.json");
+    const categories = await response.json();
+
+    const menCategories = categories.filter(
+      category => category.gender === "Men"
+    );
+
+    categoryContainer.innerHTML = menCategories.map(category => `
+      <article class="category-card">
+        <img src="${category.image}" alt="${category.name}">
+        <h3>${category.name}</h3>
+        <a href="${category.page}">Shop Now</a>
+      </article>
+    `).join("");
+  } catch (error) {
+    categoryContainer.innerHTML = "<p>Categories could not be loaded.</p>";
+    console.error(error);
+  }
+}
+
+loadMenCategories();
+    </script>
 </html>
